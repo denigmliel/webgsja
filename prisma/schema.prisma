@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Untuk produksi disarankan PostgreSQL: ganti provider menjadi "postgresql"
+// dan isi DATABASE_URL dengan connection string PostgreSQL.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Member {
+  id         Int        @id @default(autoincrement())
+  fullName   String
+  gender     String // "L" atau "P"
+  birthDate  DateTime?
+  birthMonth Int? // 1-12, diisi otomatis dari birthDate
+  birthDay   Int? // 1-31, diisi otomatis dari birthDate
+  phone      String?
+  address    String?
+  active     Boolean    @default(true)
+  offerings  Offering[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([birthMonth])
+  @@index([fullName])
+}
+
+// UMUM | PEMBANGUNAN | JANJI_IMAN | KASIH
+model Offering {
+  id        Int      @id @default(autoincrement())
+  type      String
+  amount    Int // dalam Rupiah
+  date      DateTime
+  note      String?
+  memberId  Int?
+  member    Member?  @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+
+  @@index([type, date])
+  @@index([date])
+}
