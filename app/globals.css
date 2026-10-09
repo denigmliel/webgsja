@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --ink: #1b2540;
   --ink-soft: #3b4766;
