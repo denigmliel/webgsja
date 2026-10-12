@@ -9,7 +9,7 @@ export default function SiteHeader({ locale }: { locale: Locale }) {
       <div className="header-inner">
         <Link href="/" className="brand" aria-label={locale === "en" ? "GSJA Ciputat Timur, home" : "GSJA Ciputat Timur, ke beranda"}>
           <Image src="/img/logo.jpg" alt="" width={50} height={44} priority />
-          <span>GSJA Ciputat Timur</span>
+          <span>GSJA CITI</span>
         </Link>
         <Nav locale={locale} />
       </div>
